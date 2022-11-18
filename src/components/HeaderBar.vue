@@ -16,15 +16,50 @@
       <span>Некрасова Екатерина</span>
     </div>
     <span class="ml-auto mr-2">Тестовое задание</span>
-  </v-app-bar>
-</template>
+    <!-- <span> {{obj.array2[0]}}} </span> -->
+ 
+   </v-app-bar>
+ </template>
+ 
+ <script>
+ export default {
+   name: "HeaderBar",
+   data() {
+     return {
+       obj: {
+         array1: [
+           'vuetify-loader',
+         ],
+         array2: [
+           'vuetify-loader',
+         ]
+       },
+       
+       num: [
+           1, 2, 3, 4, 5,
+       ]
+     }
+   },
+   methods: {
+     newElement() {
+       this.obj.array2.push('Иван')
+     },
+     log(el) {
+       console.log(el)
+     }
+     
+   },
+   
+   created() {
+     this.newElement()
+     this.log(this.obj)
+     this.obj.num = this.num
+     this.log(this.obj)
+   }
+ }
+ </script>
+ 
+ <style scoped>
 
-<script>
-export default {
-  name: "HeaderBar"
-}
-</script>
-
-<style scoped>
-
-</style>
+ 
+ </style>

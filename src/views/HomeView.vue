@@ -1,15 +1,26 @@
 <template>
-  <hello-world />
+  <div>
+    <header-buttons :people.sync="people"/>
+    <people-list :people="people"/>
+  </div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
 
-  export default {
-    name: 'HomeView',
+import HeaderButtons from "@/components/HeaderButtons";
+import PeopleList from "@/components/PeopleList";
 
-    components: {
-      HelloWorld,
-    },
-  }
+export default {
+  name: 'HomeView',
+  data() {
+    return {
+      people: [],
+    }
+  },
+  components: {
+    PeopleList,
+    HeaderButtons,
+
+  },
+}
 </script>
