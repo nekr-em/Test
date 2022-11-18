@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: center">
+  <div style="display: flex;">
     <v-btn color="primary" class="mr-2 mt-2" @click="postt">
       Отправить
     </v-btn>
