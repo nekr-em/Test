@@ -1,5 +1,5 @@
 <template>
-<div class="mt-2 ml-2">
+<div class="mt-2">
   <v-chip
       @click="changeHuman(human.name)"
       class="mr-2"

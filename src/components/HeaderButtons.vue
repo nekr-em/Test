@@ -48,6 +48,9 @@ export default {
     }
   },
   name: "HeaderButtons",
+  created() {
+    this.gett()
+  },
   methods: {
     gett() {
       this.axios.get('https://crudcrud.com/api/0d0df18f0abe403daa4f1b3f8637c23a/people').then((response) => {
