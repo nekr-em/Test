@@ -1,8 +1,8 @@
 <template>
   <div class="ml-8">
-    <header-buttons :people.sync="people"/>
-    <people-list :people="people" :human.sync="human"/>
-    <update-input :human="human"/>
+    <header-buttons ref="headerButtons" :people.sync="people"/>
+    <people-list :people="people" :human.sync="human" :human-id.sync="humanId" @gett="gett"/>
+    <update-input @gett="gett" :human="human" :human-id="humanId"/>
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
     return {
       people: [],
       human: '',
+      humanId: '',
     }
   },
   components: {
@@ -25,6 +26,11 @@ export default {
     PeopleList,
     HeaderButtons,
 
+  },
+  methods: {
+    gett(){
+      this.$refs.headerButtons.gett();
+    },
   },
 }
 </script>

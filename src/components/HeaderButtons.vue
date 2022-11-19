@@ -1,9 +1,9 @@
 <template>
-  <div style="display: flex;">
-    <v-btn color="primary" class="mr-2 mt-2" @click="postt">
+  <div style="display: flex;" class="mt-3">
+    <v-btn color="primary" class="mr-2" @click="postt">
       Отправить
     </v-btn>
-    <v-btn color="primary" class="mr-2 mt-2" @click="gett">
+    <v-btn color="primary" class="mr-2" @click="gett">
       Получить
     </v-btn>
   </div>
@@ -53,13 +53,13 @@ export default {
   },
   methods: {
     gett() {
-      this.axios.get('https://crudcrud.com/api/0d0df18f0abe403daa4f1b3f8637c23a/people').then((response) => {
+      this.axios.get('https://crudcrud.com/api/eefa33ebe8434f3da10db11c62feaa8d/people').then((response) => {
         this.$emit('update:people', response.data)
       });
     },
     postt() {
       this.data.forEach((human)=>{
-        this.axios.post('https://crudcrud.com/api/0d0df18f0abe403daa4f1b3f8637c23a/people', human)
+        this.axios.post('https://crudcrud.com/api/eefa33ebe8434f3da10db11c62feaa8d/people', human)
       })
     },
   },
