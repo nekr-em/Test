@@ -1,6 +1,7 @@
 <template>
   <div class="mt-2 input-conteiner">
-    <v-text-field
+    <v-text-field 
+        v-if="visible===true"
         class="mr-10"
         dense
         outlined
@@ -27,17 +28,20 @@ export default {
   data() {
     return {
       text: '',
+      visible: false,
     }
   },
   watch: {
     human(value) {
       this.text = value;
+      this.visible = true;
     }
   },
   methods: {
     putt() {
-      this.axios.put(`https://crudcrud.com/api/eefa33ebe8434f3da10db11c62feaa8d/people/${this.humanId}`, {name: this.text}).then(() => {
+      this.axios.put(`https://crudcrud.com/api/b6dde83212b545d08d09a8a12e43fcc0/people/${this.humanId}`, {name: this.text}).then(() => {
         this.$emit('gett')
+        this.visible=false
       })
     }
   }

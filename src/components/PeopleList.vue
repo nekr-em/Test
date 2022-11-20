@@ -34,7 +34,7 @@ export default {
       this.$emit('update:humanId', id)
     },
     dell(id) {
-      this.axios.delete(`https://crudcrud.com/api/eefa33ebe8434f3da10db11c62feaa8d/people/${id}`).then(() => {
+      this.axios.delete(`https://crudcrud.com/api/b6dde83212b545d08d09a8a12e43fcc0/people/${id}`).then(() => {
         this.$emit('gett')
       })
     },
