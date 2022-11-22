@@ -19,33 +19,9 @@ export default {
 
   data() {
     return {
-      data: [
-        {
-          name: "Имя Фамилия"
-        },
-        {
-          name: "Имя Фамилия2"
-        },
-        {
-          name: "Имя Фамилия3"
-        },
-        {
-          name: "Имя Фамилия4"
-        },
-        {
-          name: "Имя Фамилия5"
-        },
-        {
-          name: "Имя Фамилия6"
-        },
-        {
-          name: "Имя Фамилия7"
-        },
-        {
-          name: "Имя Фамилия8"
-        },
-      ],
-    }
+      names: ['Иван', 'Петр', 'Антон', 'Михаил', 'Владимир', 'Артем', 'Андрей'],
+      lastNames: ['Иванов', 'Петров', 'Антонов', 'Михайлов', 'Владимиров', 'Артемов', 'Андреев'],
+  }
   },
   name: "HeaderButtons",
   created() {
@@ -58,9 +34,15 @@ export default {
       });
     },
     postt() {
-      this.data.forEach((human)=>{
+      for (let i=0; i<5; i++) {
+        let human = {
+          name: `${this.names[this.getRandom(this.names.length)]} ${this.lastNames[this.getRandom(this.lastNames.length)]}`,
+        }
         this.axios.post(this.$apiUrl, human)
-      })
+      }
+    },
+    getRandom(max) {
+      return Math.floor(Math.random() * (max + 1))
     },
   },
 }
