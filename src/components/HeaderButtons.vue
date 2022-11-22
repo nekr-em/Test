@@ -53,13 +53,13 @@ export default {
   },
   methods: {
     gett() {
-      this.axios.get('https://crudcrud.com/api/b6dde83212b545d08d09a8a12e43fcc0/people').then((response) => {
+      this.axios.get(this.$apiUrl).then((response) => {
         this.$emit('update:people', response.data)
       });
     },
     postt() {
       this.data.forEach((human)=>{
-        this.axios.post('https://crudcrud.com/api/b6dde83212b545d08d09a8a12e43fcc0/people', human)
+        this.axios.post(this.$apiUrl, human)
       })
     },
   },
