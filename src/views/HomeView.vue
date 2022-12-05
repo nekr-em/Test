@@ -3,7 +3,15 @@
     <!--    <header-buttons ref="headerButtons" :people.sync="people"/>-->
     <!--    <people-list :people="people" :human.sync="human" :human-id.sync="humanId" @gett="gett"/>-->
     <!--    <update-input @gett="gett" :human="human" :human-id="humanId"/>-->
-    <chat-message class="ma-5" :imgs-links="imgs" :text="text" :date="data"/>
+    <chat-message 
+        class="ma-5" 
+        :imgs-links="imgs"
+        :text="text"
+        :date="data" 
+        username="Екатерина Некрасова" 
+        reply-message-text="Привет, я написала ответ большой большой большой большой большой ьшой большой большой большой большой ьшой большой большой большой большой ьшой большой большой большой большой" 
+        reply-message-user-name="Юлия Некрасова"
+    />
   </div>
 </template>
 

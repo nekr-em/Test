@@ -1,14 +1,27 @@
 <template>
   <v-card class="message-container rounded-lg">
+    <div v-if="username" class="username-container">
+      <span>{{ username }}</span>
+    </div>
     <div class="image-container" v-if="imgsLinks">
       <v-img
           v-for="(img, index) in imgsLinks.filter((item, i) => i < 10)"
           :key="index"
           :src="img"
+          @click="openImage(img)"
+          style="cursor: pointer"
       />
     </div>
+    <div class="reply-container" v-if="replyMessageText">
+      <div class="reply-content">
+        <div class="username-container">
+          <span>{{ replyMessageUserName }}</span>
+        </div>
+        <span class="reply-message" v-text="replyMessageText"/>
+      </div>
+    </div>
     <div class="text-container" v-if="text">
-      <span v-html="text"/>
+      <span v-text="text"/>
       <div class="date-container">
         {{ localDate }}
       </div>
@@ -33,7 +46,16 @@ export default {
     date: {
       type: String,
       required: true
-    }
+    },
+    username: {
+      type: String
+    },
+    replyMessageText: {
+      type: String
+    },
+    replyMessageUserName: {
+      type: String
+    },
   },
   computed: {
     localDate() {
@@ -42,7 +64,12 @@ export default {
       else return moment(this.date).format('LLL');
     }
   },
-  name: "ChatMessage"
+  name: "ChatMessage",
+  methods: {
+    openImage(img) {
+      window.open(img, '_blank')
+    }
+  }
 }
 
 </script>
@@ -73,7 +100,7 @@ export default {
     position: relative;
     bottom: auto;
     float: right;
-    color: rgba(255,255,255,0.533333);
+    color: rgba(255, 255, 255, 0.533333);
   }
 }
 
@@ -87,9 +114,48 @@ export default {
   padding: 0 4px;
   display: flex;
   align-items: center;
-  background-color: rgba(0,0,0,0.3);
-  
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
+.username-container {
+  color: white;
+  margin: 2px 6px;
+  font-size: 14px;
+}
+
+.reply-container {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  align-items: center;
+  
+  .reply-content {
+    display: block;
+    overflow: hidden;
+    padding-left: 12px;
+  }
+  
+ ::before {
+   content: '';
+   display: block;
+   position: absolute;
+   top: 0.3125rem;
+   bottom: 0.3125rem;
+   left: 0.375rem;
+   width: 4px;
+   border-radius: 2px;
+   background: aqua;
+ }
+  
+  .reply-message {
+    margin: 2px 6px;
+    font-size: 14px;
+    color: white;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+}
 
 </style>
