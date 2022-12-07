@@ -3,6 +3,24 @@
     <div v-if="username" class="username-container">
       <span>{{ username }}</span>
     </div>
+    <div v-if="attachments" class="files-container">
+      <div
+          v-for="(file, index) in attachments"
+          :key="index"
+          @click="downloadFile(file.href, file.name)"
+          class="file"
+      >
+        <div class="icon">
+          <v-icon
+              color="white"
+              size="42"
+          >
+            mdi-download
+          </v-icon>
+        </div>
+        <span v-text="file.name" class="text"/>
+      </div>
+    </div>
     <div class="image-container" v-if="imgsLinks">
       <v-img
           v-for="(img, index) in imgsLinks.filter((item, i) => i < 10)"
@@ -21,14 +39,10 @@
       </div>
     </div>
     <div class="text-container" v-if="text">
-      <span v-text="text"/>
-      <div class="date-container">
-        {{ localDate }}
-      </div>
+      <span v-html="text"/>
+      <div class="date-container" v-text="localDate"/>
     </div>
-    <div class="image-date" v-else>
-      {{ localDate }}
-    </div>
+    <div class="image-date" v-else v-text="localDate"/>
   </v-card>
 </template>
 
@@ -56,6 +70,9 @@ export default {
     replyMessageUserName: {
       type: String
     },
+    attachments: {
+      type: Array
+    },
   },
   computed: {
     localDate() {
@@ -68,6 +85,14 @@ export default {
   methods: {
     openImage(img) {
       window.open(img, '_blank')
+    },
+    downloadFile(src, name) {
+      const anchor = document.createElement('a');
+      anchor.href = src;
+      anchor.download = name;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
     }
   }
 }
@@ -86,6 +111,10 @@ export default {
   grid-gap: 3px;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.files-container {
+  margin: 6px 10px 2px;
 }
 
 .text-container {
@@ -123,30 +152,55 @@ export default {
   font-size: 14px;
 }
 
+.file {
+  cursor: pointer;
+  display: flex;
+  overflow: hidden;
+  padding-bottom: 6px;
+
+  .text {
+    overflow: hidden;
+    color: white;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    padding-left: 12px;
+    align-self: center;
+  }
+
+  .icon {
+    background-color: #3993fb;
+    border-radius: 8px;
+    padding: 6px;
+  }
+}
+
 .reply-container {
   display: flex;
   position: relative;
   overflow: hidden;
   align-items: center;
-  
+
   .reply-content {
     display: block;
     overflow: hidden;
     padding-left: 12px;
   }
-  
- ::before {
-   content: '';
-   display: block;
-   position: absolute;
-   top: 0.3125rem;
-   bottom: 0.3125rem;
-   left: 0.375rem;
-   width: 4px;
-   border-radius: 2px;
-   background: aqua;
- }
-  
+
+  ::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.3125rem;
+    bottom: 0.3125rem;
+    left: 0.375rem;
+    width: 4px;
+    border-radius: 2px;
+    background: aqua;
+  }
+
   .reply-message {
     margin: 2px 6px;
     font-size: 14px;
