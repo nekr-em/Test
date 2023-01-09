@@ -8,23 +8,26 @@
         v-for="(file, index) in attachments"
         :key="index"
         class="file"
-        @click="downloadFile(file.href, file.name)"
+        @click="downloadFile(file.downloadUrl, file.name)"
       >
         <div
-          v-if="file.type==='video'"
-          :class="isRoundVideo ? 'round-video' : ''"
-          :style="imgsLinks[0] ? `background-image: url(${imgsLinks[0]}); background-repeat: no-repeat; background-size: cover` : ''"
-          class="icon"
+          v-if="file.type === 'video'"
+          style="height: 100%; width: 100%"
         >
-          <v-icon
-            v-if="!imgsLinks[0]"
-            color="white"
-            size="42"
+          <v-img
+            class="video"
+            :src="file.thumbnailUrl"
           >
-            mdi-download
-          </v-icon>
+            <v-icon
+              color="primary"
+              size="62"
+              style="left: calc(50% - 31px)"
+            >
+              mdi-download
+            </v-icon>
+          </v-img>
         </div>
-        <div v-if="file.type==='voice_message'" class="voice-container">
+        <div v-if="file.type === 'voice_message'" class="voice-container">
           <v-btn fab small color="green">
             <v-icon
               color="white"
@@ -179,6 +182,12 @@ export default {
   display: flex;
   overflow: hidden;
   padding-bottom: 6px;
+  
+  .video {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+  }
 
   .text {
     overflow: hidden;
@@ -204,10 +213,6 @@ export default {
     background-color: #3993fb;
     border-radius: 50%;
     padding: 6px;
-  }
-
-  .round-video {
-    border-radius: 50%;
   }
 
   .voice-container {
