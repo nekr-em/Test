@@ -41,7 +41,22 @@
             class="thumbnail-container"
           />
         </div>
-        <div v-if="file.type==='file'">
+        <div v-if="file.type==='file'" style="display: flex; width: 100%; height: 100%">
+          <div 
+            :style="file.thumbnailUrl ? `background-image: url(${file.thumbnailUrl}); background-repeat: no-repeat; background-size: cover` : ''"
+            class="file-img"
+            @mouseenter="needFileIcon = true"
+            @mouseleave="needFileIcon = false"
+          >
+            <v-icon
+              v-if="needFileIcon"
+              color="white"
+              size="42"
+              class="file-icon"
+            >
+              mdi-download
+            </v-icon>
+          </div>
           <span class="text" v-text="file.fileName"/>
         </div>
       </div>
@@ -98,6 +113,11 @@ export default {
     attachments: {
       type: Array
     },
+  },
+  data() {
+    return {
+      needFileIcon: false,
+    }
   },
   computed: {
     localDate() {
@@ -182,6 +202,18 @@ export default {
   display: flex;
   overflow: hidden;
   padding-bottom: 6px;
+  
+  .file-img {
+    display: flex;
+    width: auto;
+    border-radius: 4px;
+    min-width: 78px;
+    min-height: 78px;
+
+    .file-icon {
+      padding: 18px;
+    }
+  }
   
   .video {
     min-height: 100%;
