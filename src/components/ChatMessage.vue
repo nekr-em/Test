@@ -5,32 +5,54 @@
     </div>
     <div v-if="attachments" class="files-container">
       <div
-          v-for="(file, index) in attachments"
-          :key="index"
-          @click="downloadFile(file.href, file.name)"
-          class="file"
+        v-for="(file, index) in attachments"
+        :key="index"
+        class="file"
+        @click="downloadFile(file.href, file.name)"
       >
-        <div class="icon">
+        <div
+          v-if="file.type==='video'"
+          :class="isRoundVideo ? 'round-video' : ''"
+          :style="imgsLinks[0] ? `background-image: url(${imgsLinks[0]}); background-repeat: no-repeat; background-size: cover` : ''"
+          class="icon"
+        >
           <v-icon
-              color="white"
-              size="42"
+            v-if="!imgsLinks[0]"
+            color="white"
+            size="42"
           >
             mdi-download
           </v-icon>
         </div>
-        <span v-text="file.name" class="text"/>
+        <div v-if="file.type==='voice_message'" class="voice-container">
+          <v-btn fab small color="green">
+            <v-icon
+              color="white"
+              size="32"
+            >
+              mdi-download
+            </v-icon>
+          </v-btn>
+          <v-img
+            :src="file.thumbnailUrl"
+            class="thumbnail-container"
+          />
+        </div>
+        <div v-if="file.type==='file'">
+          <span class="text" v-text="file.fileName"/>
+        </div>
       </div>
     </div>
-    <div class="image-container" v-if="imgsLinks">
+    <div v-if="imgsLinks" class="image-container">
       <v-img
-          v-for="(img, index) in imgsLinks.filter((item, i) => i < 10)"
-          :key="index"
-          :src="img"
-          @click="openImage(img)"
-          style="cursor: pointer"
+        v-for="(img, index) in imgsLinks.filter((item, i) => i < 10)"
+        :key="index"
+        :src="img"
+        style="cursor: pointer"
+        @click="openImage(img)"
       />
     </div>
-    <div class="reply-container" v-if="replyMessageText">
+    <div v-if="replyMessageText" class="reply-container">
       <div class="reply-content">
         <div class="username-container">
           <span>{{ replyMessageUserName }}</span>
@@ -38,11 +60,11 @@
         <span class="reply-message" v-text="replyMessageText"/>
       </div>
     </div>
-    <div class="text-container" v-if="text">
+    <div v-if="text" class="text-container">
       <span v-html="text"/>
       <div class="date-container" v-text="localDate"/>
     </div>
-    <div class="image-date" v-else v-text="localDate"/>
+    <div v-else class="image-date" v-text="localDate"/>
   </v-card>
 </template>
 
@@ -174,6 +196,29 @@ export default {
     background-color: #3993fb;
     border-radius: 8px;
     padding: 6px;
+    min-height: 54px;
+    min-width: 54px;
+  }
+
+  .voice-icon {
+    background-color: #3993fb;
+    border-radius: 50%;
+    padding: 6px;
+  }
+
+  .round-video {
+    border-radius: 50%;
+  }
+
+  .voice-container {
+    display: grid;
+    grid-template-columns: 55px auto;
+    align-items: center;
+
+    .thumbnail-container {
+      display: flex;
+      max-height: 32px;
+    }
   }
 }
 
